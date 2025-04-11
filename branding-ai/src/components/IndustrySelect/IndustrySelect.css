@@ -1,0 +1,133 @@
+.industry-select {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  padding: var(--spacing-md);
+}
+
+.industry-select-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.industry-select-title {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.industry-select-subtitle {
+  font-size: var(--font-lg);
+  color: var(--color-gray-600);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.industry-option {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-lg);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-lg);
+  font-weight: 500;
+  color: var(--color-dark);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-height: 64px;
+}
+
+.industry-option:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-gray-100);
+}
+
+.industry-option.selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  color: var(--color-white);
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-gray-400);
+  border-radius: var(--radius-sm);
+  margin-right: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-size: var(--font-lg);
+  transition: all var(--transition-normal);
+}
+
+.industry-option.selected .checkbox {
+  border-color: var(--color-white);
+  background-color: transparent;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-xl);
+}
+
+.navigation-buttons .btn {
+  min-width: 120px;
+  height: 48px;
+  font-size: var(--font-lg);
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-gray-400);
+  cursor: not-allowed;
+}
+
+.btn-primary:not(:disabled):hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-gray-200);
+  color: var(--color-dark);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-gray-300);
+}
+
+@media (max-width: 640px) {
+  .industry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navigation-buttons {
+    flex-direction: column-reverse;
+    gap: var(--spacing-md);
+  }
+
+  .navigation-buttons .btn {
+    width: 100%;
+  }
+} 
