@@ -17,41 +17,55 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>({
-    id: '1',
-    name: 'Collaborator',
-    email: 'collaborator@example.com'
-  });
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Temporarily bypass authentication check for collaboration
-    setUser({
-      id: '1',
-      name: 'Collaborator',
-      email: 'collaborator@example.com'
-    });
-    setIsAuthenticated(true);
+    // Check if user is stored in localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+        localStorage.removeItem('user');
+      }
+    }
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Temporarily bypass login for collaboration
-    setUser({
-      id: '1',
-      name: 'Collaborator',
-      email: 'collaborator@example.com'
-    });
-    setIsAuthenticated(true);
+    try {
+      // In a real app, you would make an API call here
+      // For now, we'll simulate a successful login
+      const mockUser = {
+        id: '1',
+        name: email.split('@')[0], // Use part of email as name
+        email: email
+      };
+      
+      // Store user in state
+      setUser(mockUser);
+      setIsAuthenticated(true);
+      
+      // Store user in localStorage
+      localStorage.setItem('user', JSON.stringify(mockUser));
+      
+      return Promise.resolve();
+    } catch (error) {
+      console.error('Login error:', error);
+      return Promise.reject(error);
+    }
   };
 
   const logout = () => {
-    // Temporarily bypass logout for collaboration
-    setUser({
-      id: '1',
-      name: 'Collaborator',
-      email: 'collaborator@example.com'
-    });
-    setIsAuthenticated(true);
+    // Clear user from state
+    setUser(null);
+    setIsAuthenticated(false);
+    
+    // Remove user from localStorage
+    localStorage.removeItem('user');
   };
 
   const value = {

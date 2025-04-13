@@ -22,7 +22,9 @@ export default function Auth() {
     setLoading(true);
 
     try {
-      // Temporarily bypass authentication for collaboration
+      // Call the login function from AuthContext
+      await login(formData.email, formData.password);
+      
       setSuccess('Logged in successfully!');
       
       // Reset form
@@ -30,7 +32,7 @@ export default function Auth() {
       
       // Redirect to home page after a short delay
       setTimeout(() => {
-        navigate('/home');
+        navigate('/');
       }, 1000);
     } catch (err) {
       console.error('Auth error:', err);
