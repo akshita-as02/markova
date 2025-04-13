@@ -25,24 +25,27 @@ export default function Home() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsProcessing(true); // Show processing page
     setIsLoading(true);
     setError('');
-
+  
     try {
       await api.post('/brand', brandInfo);
       navigate('/dashboard');
     } catch (err) {
       setError('Failed to save brand information. Please try again.');
+      setIsProcessing(false); // Reset if error
     } finally {
       setIsLoading(false);
     }
   };
-
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setBrandInfo(prev => ({
@@ -83,7 +86,19 @@ export default function Home() {
 
   if (!user) {
     return null;
-  }
+  } 
+
+  if (isProcessing) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-600 border-opacity-50 mx-auto mb-4"></div>
+          <p className="text-lg font-medium text-gray-700">Generating your brand assets...</p>
+          <p className="text-sm text-gray-500 mt-2">Please hold on while we process your information.</p>
+        </div>
+      </div>
+    );
+  }  
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20 px-4 sm:px-6 lg:px-8">
@@ -91,10 +106,31 @@ export default function Home() {
         <div className="bg-white shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900 mb-6">
-              {step === 1 ? 'Tell us about your brand' : 
-               step === 2 ? 'What is your industry?' : 
-               'What type of style do you want?'}
+              {step === 1 ? 'Step 1/3' : 
+               step === 2 ? 'Step 2/3' : 
+               'Step 3/3'}
             </h3>
+
+          <div className="w-full mb-6">
+            <div className="relative w-full h-2 bg-gray-200 rounded-full">
+              <div
+                className="absolute top-0 left-0 h-2 bg-indigo-600 rounded-full transition-all duration-300"
+                style={{ width: `${(step / 3) * 100}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-2 px-1">
+              <span className={step === 1 ? 'font-semibold text-indigo-600' : ''}>Brand</span>
+              <span className={step === 2 ? 'font-semibold text-indigo-600' : ''}>Industry</span>
+              <span className={step === 3 ? 'font-semibold text-indigo-600' : ''}>Style</span>
+            </div>
+          </div>
+
+              <h3 className="text-lg leading-6 font-medium text-gray-900 mb-6">
+                {step === 1 ? 'Tell us about your brand' : 
+                step === 2 ? 'What is your industry?' : 
+                'How would you like your logo to look?'}
+              </h3>
+
             
             <div className="mt-5">
               {step === 1 && (
