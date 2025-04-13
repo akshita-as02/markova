@@ -22,33 +22,8 @@ export default function Auth() {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        // Use the login function from AuthContext
-        await login(formData.email, formData.password);
-        setSuccess('Logged in successfully!');
-      } else {
-        // For signup, we'll still use the API directly
-        const response = await fetch('http://localhost:5000/api/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-          }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to sign up');
-        }
-
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
-        setSuccess('Account created successfully!');
-      }
+      // Temporarily bypass authentication for collaboration
+      setSuccess('Logged in successfully!');
       
       // Reset form
       setFormData({ name: '', email: '', password: '' });

@@ -17,42 +17,41 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>({
+    id: '1',
+    name: 'Collaborator',
+    email: 'collaborator@example.com'
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on mount
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
-    }
+    // Temporarily bypass authentication check for collaboration
+    setUser({
+      id: '1',
+      name: 'Collaborator',
+      email: 'collaborator@example.com'
+    });
+    setIsAuthenticated(true);
   }, []);
 
   const login = async (email: string, password: string) => {
-    try {
-      // Make actual API call to login
-      const response = await api.post('/auth/signin', { email, password });
-      const { user: userData, token } = response.data;
-      
-      // Store token for future API requests
-      localStorage.setItem('token', token);
-      
-      // Set user data
-      setUser(userData);
-      setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(userData));
-    } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
-    }
+    // Temporarily bypass login for collaboration
+    setUser({
+      id: '1',
+      name: 'Collaborator',
+      email: 'collaborator@example.com'
+    });
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    // Temporarily bypass logout for collaboration
+    setUser({
+      id: '1',
+      name: 'Collaborator',
+      email: 'collaborator@example.com'
+    });
+    setIsAuthenticated(true);
   };
 
   const value = {
