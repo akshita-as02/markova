@@ -1,2 +1,0 @@
-# markova
-Branding AI Assistant
