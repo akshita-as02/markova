@@ -2,16 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Your custom styles below */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,15 +24,7 @@ a:hover {
   color: #535bf2;
 }
 
-/* body {
-  /* margin: 0;
-  display: flex;
-  place-items: center; */
-  /* min-width: 320px; */
-  /* min-height: 100vh; */
- */
-
-h1 {
+ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
@@ -71,4 +59,200 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+
+:root {
+  /* Colors */
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-primary-light: #818cf8;
+  --color-white: #ffffff;
+  --color-dark: #111827;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-600: #4b5563;
+
+  /* Spacing */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Font Sizes */
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* Transitions */
+  --transition-normal: 0.2s ease;
+}
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-dark);
+}
+
+/* Layout */
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Button Base Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-width: 120px;
+  height: 48px;
+  font-size: var(--font-lg);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-gray-400);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: var(--color-gray-200);
+  color: var(--color-dark);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-gray-300);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-base);
+  transition: border-color var(--transition-normal);
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* Card styles */
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: var(--spacing-xs);
+}
+.mt-2 {
+  margin-top: var(--spacing-sm);
+}
+.mt-3 {
+  margin-top: var(--spacing-md);
+}
+.mt-4 {
+  margin-top: var(--spacing-lg);
+}
+.mt-5 {
+  margin-top: var(--spacing-xl);
+}
+
+.mb-1 {
+  margin-bottom: var(--spacing-xs);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-3 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-4 {
+  margin-bottom: var(--spacing-lg);
+}
+.mb-5 {
+  margin-bottom: var(--spacing-xl);
+}
+
+.p-1 {
+  padding: var(--spacing-xs);
+}
+.p-2 {
+  padding: var(--spacing-sm);
+}
+.p-3 {
+  padding: var(--spacing-md);
+}
+.p-4 {
+  padding: var(--spacing-lg);
+}
+.p-5 {
+  padding: var(--spacing-xl);
 }
