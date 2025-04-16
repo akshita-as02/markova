@@ -10,13 +10,6 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  // apiKey: "AIzaSyB5w1k8f5uovSLj18Wso2jlhp-D-oGjqQE",
-  // authDomain: "markova-3d63c.firebaseapp.com",
-  // projectId: "markova-3d63c",
-  // storageBucket: "markova-3d63c.firebasestorage.app",
-  // messagingSenderId: "836744267038",
-  // appId: "1:836744267038:web:79fc1277b22bd749d1350f",
-  // measurementId: "G-3KC9WNJD35",
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
