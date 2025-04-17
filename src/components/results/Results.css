@@ -1,3 +1,7 @@
+.main-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%) !important;
+}
+
 /* For custom scrollbars */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;

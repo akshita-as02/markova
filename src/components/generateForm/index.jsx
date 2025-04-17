@@ -7,7 +7,7 @@ import { database } from '../../firebase/firebase';
 import { ref, push, set } from 'firebase/database';
 // import { hf_image_blob } from '../../utils';
 import ImageGenerator from '../imageGenerator';
-import { generateImageFromText } from '../../utils/huggingface';
+import { generateImageFromText, generateTagline } from '../../utils/huggingface';
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { blobUrlToBlob, uploadImageToImgBB } from '../../utils/imgBBUpload';
 
@@ -22,14 +22,45 @@ export default function GenerateForm() {
         mission: '',
         vision: '',
         industries: [],
-        style: ''
+        style: '',
+        tagline: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const { userLoggedIn, currentUser } = useAuth();
+    const [isGeneratingTagline, setIsGeneratingTagline] = useState(false);
     // console.log("CURRENT USER", currentUser)
     const navigate = useNavigate();
+
+
+    const handleGenerateTagline = async () => {
+        if (brandInfo.industries.length === 0) {
+            setError('Please select at least one industry first');
+            return;
+        }
+
+        setIsGeneratingTagline(true);
+        setError('');
+
+        try {
+            const tagline = await generateTagline(brandInfo);
+            setBrandInfo(prev => ({
+                ...prev,
+                tagline
+            }));
+        } catch (err) {
+            console.error('Tagline generation error:', err);
+            setError('Failed to generate tagline. Please try again.');
+        } finally {
+            setIsGeneratingTagline(false);
+        }
+    };
+
+    const handleRegenerate = async () => {
+        brandInfo.tagline = ''; // Clear the existing tagline
+        handleGenerateTagline(); // Simply call the same function again
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,7 +68,9 @@ export default function GenerateForm() {
         setIsLoading(true);
         setError('');
         try {
-            const prompt = `Logo for ${brandInfo.brandName} in ${brandInfo.style} style in 4K`;
+            const prompt = `Generate a unique logo for ${brandInfo.brandName} and includes these ${brandInfo.industries.join(', ')} industries having mission: ${brandInfo.mission}, vision: ${brandInfo.vision}. Make it inspiring, creative, and catchy.`
+
+            // const prompt = `Logo for ${brandInfo.brandName} in ${brandInfo.style} style in 4K`;
             const { imageUrl } = await generateImageFromText(prompt);
             console.log(imageUrl, "IMAGE URL")
 
@@ -249,6 +282,27 @@ export default function GenerateForm() {
                                         ))}
                                     </div>
 
+                                    {/* Add tagline section */}
+                                    {brandInfo.industries.length > 0 && (
+                                        <div className="mt-6">
+                                            <button
+                                                type="button"
+                                                onClick={brandInfo.tagline.length > 0 ? handleRegenerate : handleGenerateTagline}
+                                                disabled={isGeneratingTagline}
+                                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 mb-4"
+                                            >
+                                                {isGeneratingTagline ? 'Generating...' : brandInfo.tagline.length > 0 ? "Regenerate Tagline" : 'Generate Tagline'}
+                                            </button>
+
+                                            {brandInfo.tagline && (
+                                                <div className="bg-blue-50 p-4 rounded-md">
+                                                    <p className="text-sm font-medium text-gray-700">Your Tagline:</p>
+                                                    <p className="text-lg font-semibold text-blue-600 mt-1">"{brandInfo.tagline}"</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
                                     <div className="flex justify-between mt-6">
                                         <button
                                             type="button"
@@ -260,7 +314,7 @@ export default function GenerateForm() {
                                         <button
                                             type="button"
                                             onClick={nextStep}
-                                            disabled={brandInfo.industries.length === 0}
+                                            disabled={brandInfo.industries.length === 0 && !brandInfo.tagline}
                                             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
                                         >
                                             Next

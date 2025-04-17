@@ -61,8 +61,8 @@ export default function ResultsPage() {
     }
 
     return (
-        <div className="container max-w-4xl px-4 py-8 mx-auto">
-            <h1 className="mb-8 text-3xl font-bold text-gray-800">Your Generated Brands</h1>
+        <div className="px-4 py-8 mx-auto main-section">
+            {/* <h1 className="mb-8 text-3xl font-bold text-gray-800">Your Generated Brands</h1> */}
 
             {brands.length === 0 ? (
                 <div className="p-8 text-center">
@@ -75,7 +75,7 @@ export default function ResultsPage() {
                     </button>
                 </div>
             ) : (
-                <div className="flex flex-wrap justify-start gap-6 px-4 py-8">
+                <div className="flex flex-wrap justify-start gap-6 px-4 py-8 mt-12">
                     {brands.map((brand) => (
                         <div
                             key={brand.id}
@@ -98,23 +98,23 @@ export default function ResultsPage() {
                                     <h2 className="text-xl font-semibold text-gray-800 truncate">{brand.brandName}</h2>
                                     <div className="flex flex-wrap gap-2 mt-2">
                                         {brand.industries.map((industry, i) => (
-                                            <span key={i} className="px-2 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">
+                                            <span key={i} className="px-2 py-1 text-xs text-blue-600 bg-blue-100 rounded-md">
                                                 {industry}
                                             </span>
                                         ))}
-                                        <span className="px-2 py-1 text-xs text-green-600 bg-green-100 rounded-full">
-                                            {brand.style}
+                                        <span className="px-2 py-1 text-xs text-green-600 bg-green-100 rounded-md">
+                                            {brand.style} Style
                                         </span>
                                     </div>
                                 </div>
 
                                 {/* Mission/Vision with Scroll */}
                                 <div className="flex-1 overflow-y-auto max-h-[180px] pr-2 custom-scrollbar">
-                                    <h3 className="text-sm font-medium text-gray-500">Mission</h3>
+                                    <h3 className="text-sm font-medium text-gray-800">Mission</h3>
                                     <p className="mt-1 mb-3 text-sm text-gray-600 break-words">
                                         {brand.mission}
                                     </p>
-                                    <h3 className="text-sm font-medium text-gray-500">Vision</h3>
+                                    <h3 className="text-sm font-medium text-gray-800">Vision</h3>
                                     <p className="mt-1 text-sm text-gray-600 break-words">
                                         {brand.vision}
                                     </p>
