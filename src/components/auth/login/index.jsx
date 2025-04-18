@@ -11,12 +11,43 @@ const Login = () => {
     const [isSigningIn, setIsSigningIn] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
+    // const onSubmit = async (e) => {
+    //     e.preventDefault()
+    //     if (!isSigningIn) {
+    //         setIsSigningIn(true)
+    //         await doSignInWithEmailAndPassword(email, password)
+    //         // doSendEmailVerification()
+    //     }
+    // }
+
     const onSubmit = async (e) => {
         e.preventDefault()
+
+        // Clear any previous error messages
+        setErrorMessage('')
+
         if (!isSigningIn) {
             setIsSigningIn(true)
-            await doSignInWithEmailAndPassword(email, password)
-            // doSendEmailVerification()
+            try {
+                await doSignInWithEmailAndPassword(email, password)
+                // Success case is handled by the Navigate component
+            } catch (error) {
+                // Handle Firebase auth errors
+                if (error.code === 'auth/invalid-credential' ||
+                    error.code === 'auth/invalid-email' ||
+                    error.code === 'auth/user-not-found' ||
+                    error.code === 'auth/wrong-password') {
+                    setErrorMessage('Invalid email or password')
+                } else if (error.code === 'auth/too-many-requests') {
+                    setErrorMessage('Too many failed login attempts. Please try again later')
+                } else if (error.code === 'auth/user-disabled') {
+                    setErrorMessage('This account has been disabled')
+                } else {
+                    setErrorMessage('An error occurred during sign in. Please try again')
+                }
+                // Reset the signing in state so user can try again
+                setIsSigningIn(false)
+            }
         }
     }
 
@@ -73,7 +104,7 @@ const Login = () => {
                         </div>
 
                         {errorMessage && (
-                            <span className='text-red-600 font-bold'>{errorMessage}</span>
+                            <span className='text-red-500 text-sm'>{errorMessage}</span>
                         )}
 
                         <button

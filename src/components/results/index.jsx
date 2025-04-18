@@ -124,7 +124,7 @@ export default function ResultsPage() {
                                 <a
                                     href={brand.imageUrl}
                                     download
-                                    className="mt-4 w-full px-4 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-md hover:bg-blue-600 transition-colors"
+                                    className="mt-4 w-full px-4 py-2 text-sm font-medium text-center text-white rounded-md hover:bg-blue-600 transition-colors" style={{ backgroundColor: "#6366f1" }}
                                 >
                                     Download Logo
                                 </a>

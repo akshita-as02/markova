@@ -17,9 +17,41 @@ const Register = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
+
+        // Clear any previous error messages
+        setErrorMessage('')
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            setErrorMessage('Passwords do not match')
+            return
+        }
+
+        // Check password length
+        if (password.length < 6) {
+            setErrorMessage('Password must be at least 6 characters long')
+            return
+        }
+
         if (!isRegistering) {
             setIsRegistering(true)
-            await doCreateUserWithEmailAndPassword(email, password)
+            try {
+                await doCreateUserWithEmailAndPassword(email, password)
+                // Success case is handled by the Navigate component
+            } catch (error) {
+                // Handle Firebase auth errors
+                if (error.code === 'auth/email-already-in-use') {
+                    setErrorMessage('This email is already registered')
+                } else if (error.code === 'auth/invalid-email') {
+                    setErrorMessage('Please enter a valid email address')
+                } else if (error.code === 'auth/weak-password') {
+                    setErrorMessage('Password must be at least 6 characters long')
+                } else {
+                    setErrorMessage('An error occurred during signup. Please try again.')
+                }
+                // Reset the registering state so user can try again
+                setIsRegistering(false)
+            }
         }
     }
 
@@ -81,7 +113,7 @@ const Register = () => {
                         </div>
 
                         {errorMessage && (
-                            <span className='text-red-600 font-bold'>{errorMessage}</span>
+                            <span className='text-red-500 text-sm'>{errorMessage}</span>
                         )}
 
                         <button

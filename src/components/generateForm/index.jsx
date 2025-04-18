@@ -67,6 +67,9 @@ export default function GenerateForm() {
         setIsProcessing(true);
         setIsLoading(true);
         setError('');
+
+        const minLoadingTime = 3000; // 3 seconds
+        const startTime = Date.now();
         try {
             const prompt = `Generate a unique logo for ${brandInfo.brandName} and includes these ${brandInfo.industries.join(', ')} industries having mission: ${brandInfo.mission}, vision: ${brandInfo.vision}. Make it inspiring, creative, and catchy.`
 
@@ -96,6 +99,14 @@ export default function GenerateForm() {
                 imageUrl: uploadedImageUrl,
                 createdAt: new Date().toISOString()
             });
+
+            const elapsedTime = Date.now() - startTime;
+            const remainingTime = minLoadingTime - elapsedTime;
+
+            if (remainingTime > 0) {
+                await new Promise(resolve => setTimeout(resolve, remainingTime));
+            }
+
 
             // localStorage.setItem('lastBrandId', brandId);
 
@@ -289,7 +300,7 @@ export default function GenerateForm() {
                                                 type="button"
                                                 onClick={brandInfo.tagline.length > 0 ? handleRegenerate : handleGenerateTagline}
                                                 disabled={isGeneratingTagline}
-                                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 mb-4"
+                                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 mb-4"
                                             >
                                                 {isGeneratingTagline ? 'Generating...' : brandInfo.tagline.length > 0 ? "Regenerate Tagline" : 'Generate Tagline'}
                                             </button>
