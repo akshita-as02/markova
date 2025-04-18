@@ -1,20 +1,21 @@
 # Markova - AI-Powered Branding Platform
 
-Markova is an AI-powered platform that helps users create stunning brand identities, logos, and marketing materials. With advanced AI algorithms, users can generate unique and professional designs tailored to their business needs.
+Markova is an AI-powered platform that helps users create stunning brand identities, logos, taglines, and marketing materials. With advanced AI algorithms, users can generate unique and professional designs tailored to their business needs.
 
 ## Features
 
-- **AI-Powered Design**: Generate unique brand identities and logos using advanced AI algorithms.
+- **AI-Powered Design**: Generate unique brand identities, logos, and taglines using advanced AI algorithms.
 - **Lightning Fast**: Create and iterate on designs quickly with an intuitive interface.
 - **Customizable**: Fine-tune every aspect of your brand identity, from colors to typography.
 - **Firebase Integration**: Secure user authentication and real-time database for storing user-generated brands.
 - **Image Upload**: Upload generated images to ImgBB for easy sharing and downloading.
+- **Tagline Generation**: Generate creative and catchy taglines for your brand using AI.
 
 ## Tech Stack
 
 - **Frontend**: React, React Router, TailwindCSS, Styled Components
 - **Backend**: Firebase (Authentication, Realtime Database, Storage)
-- **AI Integration**: Hugging Face Inference API for text-to-image generation
+- **AI Integration**: Hugging Face Inference API for text-to-image and tagline generation
 - **Image Hosting**: ImgBB API for image uploads
 
 ## Project Structure
