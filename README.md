@@ -115,3 +115,5 @@ Markova is an AI-powered platform that helps users create stunning brand identit
 - `npm start`: Start the development server.
 - `npm run build`: Build the app for production.
 - `npm test`: Run tests.
+
+  
